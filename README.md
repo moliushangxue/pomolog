@@ -48,6 +48,10 @@ npm run build    # 打包，产物在 src-tauri/target/release/bundle/
 
 技术栈：Tauri 2 + 原生 HTML/CSS/JS，**零前端框架、零运行时依赖**。前端就是 `src/` 下三个文件，改起来不需要懂 Rust。
 
+打包体积：**4.6 MB（.app）/ 2.6 MB（.dmg）**。
+
+架构上只有一处用了 Rust：CSV 导出调用 `save_text` 命令直接写下载目录。原因是 WKWebView 不实现浏览器的下载流程，`a[download]` 会静默失败——而这个应用的立身之本就是"记录拿得走"，不能赌。
+
 ## 数据
 
 - 存在 WebView 的 `localStorage`，键名 `pomodoro.v1`，不离开本机

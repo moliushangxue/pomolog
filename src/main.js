@@ -485,7 +485,7 @@ function csvCell(v) {
   return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
 }
 
-function exportCsv() {
+async function exportCsv() {
   const rows = [["日期", "开始", "结束", "科目", "分钟", "状态", "备注"]];
   db.log.slice().sort((a, b) => a.t - b.t).forEach(r => {
     const start = r.t * 1000;
@@ -496,16 +496,38 @@ function exportCsv() {
   });
   // BOM：不加的话 Excel 会把中文读成乱码
   const csv = "\uFEFF" + rows.map(r => r.map(csvCell).join(",")).join("\r\n");
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "番茄钟_" + dkey(Date.now()) + ".csv";
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  const name = "番茄钟_" + dkey(Date.now()) + ".csv";
 
   db.lastExport = Date.now();
   persist();
   checkBackup();
+
+  // 桌面端走原生写盘。WKWebView 不实现浏览器的下载流程，a[download] 会静默失败，
+  // 而这个应用的立身之本就是"记录拿得走"，所以这条路必须存在。
+  if (window.__TAURI__ && window.__TAURI__.core) {
+    try {
+      await window.__TAURI__.core.invoke("save_text", { filename: name, content: csv });
+      flashLabel("btnCsv", "已存到下载目录");
+      return;
+    } catch (e) {
+      // 落到浏览器下载，至少还有一条路，不吞掉本次导出
+    }
+  }
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  flashLabel("btnCsv", "已导出");
+}
+
+function flashLabel(id, text) {
+  const el = $(id);
+  const old = el.textContent;
+  el.textContent = text;
+  setTimeout(() => { el.textContent = old; }, 2600);
 }
 
 async function copyAll() {
