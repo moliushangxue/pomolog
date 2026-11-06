@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>番茄钟</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-kind="focus">
+<div class="wrap">
+
+  <div class="progress"><i id="barFill"></i></div>
+
+  <div class="subjects" id="subjects"></div>
+
+  <div class="clock" id="clock">35:00</div>
+  <div class="status" id="status">专注 · 英语 · 未开始</div>
+
+  <div class="controls">
+    <button id="btnMain" class="btn primary">开始</button>
+    <button id="btnDrop" class="btn" disabled>放弃</button>
+  </div>
+
+  <div class="presets" id="presets"></div>
+
+  <section class="panel">
+    <h2>今天</h2>
+    <div class="today" id="today"></div>
+  </section>
+
+  <section class="panel">
+    <h2>本周</h2>
+    <div class="week" id="week"></div>
+  </section>
+
+  <section class="panel">
+    <h2>流水</h2>
+    <div class="tabs">
+      <button class="tab" id="tabToday" aria-pressed="true">今天</button>
+      <button class="tab" id="tabAll" aria-pressed="false">全部</button>
+    </div>
+    <div class="rows" id="logBody"></div>
+  </section>
+
+  <footer>
+    <button class="link" id="btnCsv">导出 CSV</button>
+    <button class="link" id="btnCopy">复制全部数据</button>
+    <span class="note-hint" id="backupHint"></span>
+  </footer>
+
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>

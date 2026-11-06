@@ -1,0 +1,19 @@
+[package]
+name = "pomodoro"
+version = "0.1.0"
+description = "A pomodoro timer that keeps its own books"
+authors = ["moliushangxue"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+
+# 体积优先：番茄钟是常驻小工具，不需要极限性能
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
