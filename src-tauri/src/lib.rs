@@ -8,7 +8,7 @@ fn sanitize_filename(raw: &str) -> String {
         .filter(|c| c.is_alphanumeric() || " -_.()".contains(*c))
         .collect();
     if safe.trim().is_empty() {
-        "pomodoro.csv".to_string()
+        "pomolog.csv".to_string()
     } else {
         safe
     }
@@ -38,7 +38,7 @@ pub fn run() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![save_text])
         .run(tauri::generate_context!())
-        .expect("failed to start Pomodoro");
+        .expect("failed to start Pomolog");
 }
 
 #[cfg(test)]
@@ -58,7 +58,7 @@ mod tests {
 
     #[test]
     fn falls_back_when_empty() {
-        assert_eq!(sanitize_filename(""), "pomodoro.csv");
-        assert_eq!(sanitize_filename("///"), "pomodoro.csv");
+        assert_eq!(sanitize_filename(""), "pomolog.csv");
+        assert_eq!(sanitize_filename("///"), "pomolog.csv");
     }
 }

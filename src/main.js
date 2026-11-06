@@ -1,6 +1,6 @@
 "use strict";
 
-const KEY = "pomodoro.v1";
+const KEY = "pomolog.v1";
 // 凌晨 4 点切日：按自然日切会把 00:30 的番茄算进第二天，周统计就错位
 const DAY_CUT = 4 * 3600 * 1000;
 
@@ -126,7 +126,7 @@ function renderTimer() {
   $("btnDrop").textContent = T.kind === "rest" ? "结束休息" : "放弃";
 
   // 标签页标题跟着倒计时走：钉在浏览器里扫一眼 tab 就知道还剩多久
-  if (T.state === "idle") document.title = "番茄钟";
+  if (T.state === "idle") document.title = "番茄账";
   else document.title = txt + " · " + (T.kind === "focus" ? (who || "专注") : "休息");
 
   document.body.dataset.kind = T.kind;
@@ -496,7 +496,7 @@ async function exportCsv() {
   });
   // BOM：不加的话 Excel 会把中文读成乱码
   const csv = "\uFEFF" + rows.map(r => r.map(csvCell).join(",")).join("\r\n");
-  const name = "番茄钟_" + dkey(Date.now()) + ".csv";
+  const name = "番茄账_" + dkey(Date.now()) + ".csv";
 
   db.lastExport = Date.now();
   persist();

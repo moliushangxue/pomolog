@@ -1,7 +1,7 @@
 {
-  "name": "pomodoro",
+  "name": "pomolog",
   "version": "0.1.0",
-  "description": "A pomodoro timer that keeps its own books",
+  "description": "A pomodoro ledger that keeps its own books",
   "private": true,
   "scripts": {
     "dev": "tauri dev",

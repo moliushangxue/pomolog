@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Pomodoro",
+  "productName": "Pomolog",
   "version": "0.1.0",
-  "identifier": "com.moliushangxue.pomodoro",
+  "identifier": "com.moliushangxue.pomolog",
   "build": {
     "frontendDist": "../src"
   },
@@ -11,7 +11,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "番茄钟",
+        "title": "番茄账",
         "width": 520,
         "height": 780,
         "minWidth": 420,

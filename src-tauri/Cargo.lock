@@ -2230,7 +2230,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pomodoro"
+name = "pomolog"
 version = "0.1.0"
 dependencies = [
  "tauri",
