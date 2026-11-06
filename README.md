@@ -65,6 +65,16 @@ npm run build    # 打包，产物在 src-tauri/target/release/bundle/
 
 这两条在路线图里。
 
+## 平台支持
+
+| 平台 | 状态 | 说明 |
+|---|---|---|
+| macOS | ✅ 已验证 | `npm run build` 出 `.app` 和 `.dmg` |
+| Windows / Linux | ⏳ 未构建 | Tauri 支持，但 macOS 上无法交叉编译，需要 CI 或对应平台的机器 |
+| Android / iOS | ⏳ 未构建 | 代码已按移动端准备好（Rust 入口拆成 lib crate 带 `mobile_entry_point`，前端补了安全区和窄屏适配）。要出包还差 Android SDK / Xcode；iOS 另需 Apple 开发者账号 |
+
+代码结构上没有阻碍，缺的只是构建环境。
+
 ## 路线图
 
 - [ ] 科目可自定义

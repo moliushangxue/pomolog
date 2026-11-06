@@ -5,6 +5,12 @@ description = "A pomodoro timer that keeps its own books"
 authors = ["moliushangxue"]
 edition = "2021"
 
+# 移动端必需：iOS/Android 要把这层编成静态库/动态库供平台调用，
+# 桌面端仍然走 main.rs 调 lib.rs 的 run()，行为不变
+[lib]
+name = "pomodoro_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 

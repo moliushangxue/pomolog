@@ -128,3 +128,37 @@ footer{display:flex;gap:18px;align-items:center;border-top:1px solid var(--line)
   cursor:pointer;font-family:inherit;border-bottom:1px solid var(--line2)}
 .link:hover{color:var(--accent);border-bottom-color:var(--accent)}
 .note-hint{font-size:11px;color:var(--faint);margin-left:auto}
+
+/* ---------- 移动端基础适配 ---------- */
+/* 这层只保证"手机上不错位、点得动"，没有做移动优先的布局重排 */
+
+html{-webkit-text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent}
+button,.chip,.preset,.tab,.link{touch-action:manipulation}
+
+/* 刘海屏和底部 home indicator：不加这段，顶部和底部的字会被圆角压住 */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .wrap{
+    padding-top:calc(24px + env(safe-area-inset-top));
+    padding-bottom:calc(44px + env(safe-area-inset-bottom));
+    padding-left:calc(20px + env(safe-area-inset-left));
+    padding-right:calc(20px + env(safe-area-inset-right));
+  }
+}
+
+/* 手机宽度：触控目标放大到 44px 以上，字号不至于小到要凑近看 */
+@media (max-width:480px){
+  .clock{font-size:clamp(58px,20vw,86px)}
+  .btn{padding:13px 22px;font-size:15px}
+  .chip{padding:7px 15px;font-size:14px}
+  .preset{padding:6px 11px;font-size:13px}
+  .custom{padding:5px 7px;font-size:13px}
+  .controls{gap:8px}
+  .today{gap:18px}
+  .row{gap:8px}
+  .row .tm{min-width:84px;font-size:11px}
+  .row .sj{min-width:32px}
+  .row .mn{min-width:40px}
+  .week{gap:6px;height:96px}
+  .panel{padding:16px 0 4px}
+}
