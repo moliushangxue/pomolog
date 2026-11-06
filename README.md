@@ -52,6 +52,23 @@ npm run build    # 打包，产物在 src-tauri/target/release/bundle/
 
 架构上只有一处用了 Rust：CSV 导出调用 `save_text` 命令直接写下载目录。原因是 WKWebView 不实现浏览器的下载流程，`a[download]` 会静默失败——而这个应用的立身之本就是"记录拿得走"，不能赌。
 
+## 发版
+
+版本号散在四个文件里，漏改一个**不会报错**，只会让产物文件名、Cargo 元数据、界面显示三处各说各话。所以做成了命令：
+
+```bash
+# 1. 改版本号，四处都要改：
+#    package.json / src-tauri/Cargo.toml / src-tauri/tauri.conf.json / CHANGELOG.md
+npm run version:check    # 不一致会列出来并以退出码 1 结束
+
+# 2. 构建
+npm run build
+
+# 3. 打 tag
+git tag -a v0.1.0 -m "v0.1.0"
+git push origin main --tags
+```
+
 ## 数据
 
 - 存在 WebView 的 `localStorage`，键名 `pomodoro.v1`，不离开本机
