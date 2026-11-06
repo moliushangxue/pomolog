@@ -43,7 +43,7 @@ pub fn run() {
 
 #[cfg(test)]
 mod tests {
-    use super::sanitize_filename;
+    use super::{sanitize_filename, save_text};
 
     #[test]
     fn strips_path_separators() {
@@ -60,5 +60,19 @@ mod tests {
     fn falls_back_when_empty() {
         assert_eq!(sanitize_filename(""), "pomolog.csv");
         assert_eq!(sanitize_filename("///"), "pomolog.csv");
+    }
+
+    /// 真写一次盘再删掉：路径拼装、目录存在、编码往返，只有真写才知道对不对
+    #[test]
+    fn save_text_actually_writes() {
+        let payload = "日期,科目\n2026-11-07,英语\n";
+        let path = save_text("pomolog_selftest.csv".to_string(), payload.to_string())
+            .expect("写盘应当成功");
+
+        let p = std::path::Path::new(&path);
+        assert!(p.exists(), "文件应已落盘: {path}");
+        assert_eq!(std::fs::read_to_string(p).expect("应能读回"), payload);
+
+        std::fs::remove_file(p).ok();
     }
 }

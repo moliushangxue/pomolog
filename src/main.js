@@ -495,7 +495,9 @@ async function exportCsv() {
     ]);
   });
   // BOM：不加的话 Excel 会把中文读成乱码
-  const csv = "\uFEFF" + rows.map(r => r.map(csvCell).join(",")).join("\r\n");
+  // 末尾补 CRLF：只有表头（零记录）时 join 不产生任何换行，
+  // 而部分解析器读到没有终止符的最后一行会把它丢掉
+  const csv = "\uFEFF" + rows.map(r => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
   const name = "番茄账_" + dkey(Date.now()) + ".csv";
 
   db.lastExport = Date.now();
